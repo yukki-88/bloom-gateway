@@ -1,5 +1,5 @@
 // ========================================
-// SNS Talent Pool - JavaScript (完全版)
+// Bloom Gateway - JavaScript (完全版)
 // ========================================
 
 let studentsData = [];
@@ -19,11 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
 // ========================================
 async function loadStudentData() {
     try {
-        const response = await fetch('data.json');
-        studentsData = await response.json();
+        console.log('📡 Googleスプレッドシートからデータ取得中...');
+        
+        const apiUrl = 'https://script.google.com/macros/s/AKfycbxoCqFq2-BSgaLH0OomtX7jGc5CwjH4-UQtfgnEM2fy7_oYfCQWFjaEwzXjNJu6ZrUN_w/exec';
+        
+        const response = await fetch(apiUrl);
+        const googleData = await response.json();
+        
+        studentsData = googleData;
         filteredStudents = studentsData;
         
-        console.log(`✅ ${studentsData.length}件のデータ読み込み完了`);
+        console.log(`✅ ${studentsData.length}件のデータ読み込み完了(Googleスプレッドシート)`);
+        console.log('📊 データ:', studentsData);
         
         displayStudents();
         updateStats();
@@ -36,7 +43,6 @@ async function loadStudentData() {
         document.getElementById('loading').innerHTML = '<p style="color: #ff006e;">データ読み込みエラー</p>';
     }
 }
-
 // ========================================
 // イベントリスナー設定
 // ========================================
