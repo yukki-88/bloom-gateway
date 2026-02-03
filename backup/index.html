@@ -148,6 +148,24 @@
     </div>
 
     <!-- JavaScript -->
+ <script>
+    // パスワード保護
+    (function() {
+        const correctPassword = 'bloom2025';
+        const savedPassword = sessionStorage.getItem('bloom_auth');
+        
+        if (savedPassword !== correctPassword) {
+            const password = prompt('🔐 Bloom Gateway\n\nパスワードを入力してください:');
+            if (password !== correctPassword) {
+                alert('❌ パスワードが違います');
+                document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;color:#ff006e;"><h1>アクセスが拒否されました</h1></div>';
+                throw new Error('認証失敗');
+            } else {
+                sessionStorage.setItem('bloom_auth', password);
+            }
+        }
+    })();
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
